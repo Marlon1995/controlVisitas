@@ -17,6 +17,7 @@ use App\ConfiguracionesModelo;
 use App\PersonasModelo;
 use App\PisosModelo;
 use App\AccesosModelo;
+use App\Services\TelegramServices;
 use Validator;
 use Response;
 use View;
@@ -204,7 +205,7 @@ class AccesosControl extends BaseSoapController
                             DB::rollback();
                             return response()->json(array('errors' => array("txt_error_web_service" => "No se ha podido realizar peticion al web service, compuebe su conexión a internet")));
                         } else {
-                            if (!array_key_exists('razonsocial', $obtenidos_registro->data) || empty($obtenidos_registro->data->razonsocial)) {
+                            if (empty($obtenidos_registro->data->razonsocial)) {
                                 DB::rollback();
                                 return response()->json(array('errors' => array("txt_cedula_persona" => "No se ha podido encontrar a la persona porfavor verificar los datos.")));
                             }
@@ -242,6 +243,22 @@ class AccesosControl extends BaseSoapController
                     ->first();
 
                 \Mail::to($datos->email)->send(new EnviarEmail($datos));
+
+                //AQUI
+                $telegram= new TelegramServices();
+               $fecha= date('Y-m-d H:i:s');
+                $message = <<<TEXT
+                La persona {$Personas->Nombres}
+                Cédula: {$Personas->Cedula}
+                Sexo: {$Personas->Sexo}
+                Ha visitado la organización: {$datos->nombre_organizacion}
+                Código Tarjeta: {$Visitas->CodigoTarjeta}
+                Ubicada en el edificio: {$datos->nombre_edificio}
+                Piso: {$datos->nombre_pisoa}
+                Ticket numero: {$datos->idAcceso}
+                Fecha y Hora: {$fecha}
+                TEXT;
+                $telegram->sendMessage($message);
                // $this->imprimir($datos);
                 $Auditoria = new AuditoriasModelo();
                 $Auditoria->idUSuario = \Auth::user()->id;
