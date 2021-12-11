@@ -37,6 +37,7 @@ Route::group(['middleware' => 'SuperAdmin'], function () {
     Route::get('cambiar_admin/{id}', 'UsuarioControl@cambiar_index_administrador');
     Route::post('cambiar_admin/{id}', 'UsuarioControl@cambiar_post_administrador');
     Route::get('auditorias', 'AuditoriasControl@index');
+    Route::get('reporte', 'ReporteControl@index');
     Route::post('permisos_eliminar', 'UsuarioControl@PermisoEliminar');
     Route::post('permisos_agregar', 'UsuarioControl@PermisosAgregar');
     Route::resource('edificios', 'EdificiosControl');

@@ -28,10 +28,10 @@ class Kernel extends ConsoleKernel
         $schedule->call(function(){
         
             $job = new ReporteJob();
-            dispatch_now($job);
+            dispatch($job);
  
 
-     })->at('22:00');
+     })->at('09:50');
     }
 
     /**

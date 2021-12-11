@@ -34,13 +34,15 @@ class ReporteJob implements ShouldQueue
      */
     public function handle()
     {
+        $fecha= now()->toDateTimeString('Y-m-d');
+      
        $datos= DB::select("SELECT * FROM accesos acc 
         INNER JOIN personas p ON acc.idPersona=p.idPersona
         INNER JOIN organizaciones o ON acc.idOrganizacion=o.idOrganizacion
         INNER JOIN pisos pis ON o.idPiso=pis.idPiso
         INNER JOIN edificios e ON pis.idEdificio=e.idEdificio
         INNER JOIN visitas v ON e.idEdificio=v.idEdificio
-        WHERE cast(acc.Creacion AS DATE)='2019-09-06'");
+        WHERE cast(acc.Creacion AS DATE)='$fecha'");
 
         $export = new ReporteExport($datos);
         Excel::store($export, 'ReporteVisitas.xlsx'); 
@@ -48,7 +50,7 @@ class ReporteJob implements ShouldQueue
         $rutaArchivo= $path.'\app\ReporteVisitas.xlsx';
 
   
-        \Mail::to('marloncede1995@gmail.com')->send(new EnviarReporte($rutaArchivo));
+        \Mail::to('centro.financiero21@gmail.com')->send(new EnviarReporte($rutaArchivo));
       
 
  

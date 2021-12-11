@@ -30,7 +30,7 @@
 <div class="wrapper">
     <header class="main-header">
         <a href="{{url('/')}}" class="logo">
-            Control Visita
+            Centro Financiero
             <span class="logo-mini"><b>Control Visita</b></span>
         </a>
         <nav class="navbar navbar-static-top" role="navigation">
@@ -98,6 +98,9 @@
                                 </li>
 
                                 <li><a href="{{url('/auditorias')}}"><i class="fa fa-circle-o"></i>Auditoría</a>
+                                </li>
+
+                                <li><a href="{{url('/reporte')}}"><i class="fa fa-circle-o"></i>Reporte</a>
                                 </li>
                             </ul>
                         </li>
@@ -171,7 +174,7 @@
                 <div class="col-md-12">
                     <div class="box">
                         <div class="box-header with-border">
-                            <h3 class="box-title">SISTEMA CONTROL DE VISITAS</h3>
+                            <h3 class="box-title">SISTEMA CONTROL DE VISITAS v2.0</h3>
                             <div class="box-tools pull-right">
                                 <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                                 </button>
